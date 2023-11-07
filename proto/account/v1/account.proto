@@ -1,0 +1,92 @@
+syntax = "proto3";
+package account.v1;
+
+import "common/v1/response.proto";
+import "google/api/annotations.proto";
+import "google/api/httpbody.proto";
+import "google/protobuf/empty.proto";
+
+enum Role {
+  ROLE_UNSPECIFIED = 0;
+  ROLE_ADMIN = 1;
+  ROLE_CLIENT = 2;
+}
+
+message Account {
+  string id = 1;
+  string email = 2;
+  Role role = 3;
+}
+
+service AccountsService {
+  rpc ListAccounts(ListAccountsRequest) returns (ListAccountsResponse) {
+    option (google.api.http) = {
+      get : "/v1/accounts"
+    };
+  }
+
+  rpc GetAccount(GetAccountRequest) returns (GetAccountResponse) {
+    option (google.api.http) = {
+      get : "/v1/accounts/{id}"
+    };
+  }
+
+  rpc GetCurrentAccount(google.protobuf.Empty) returns (GetAccountResponse) {
+    option (google.api.http) = {
+      get : "/v1/accounts/me"
+    };
+  }
+
+  // rpc UpdateAccountDetails(UpdateAccountDetailsRequest)
+  //     returns (UpdateAccountDetailsResponse) {
+  //   option (google.api.http) = {
+  //     put : "/v1/accounts/{id}"
+  //     body : "request"
+  //   };
+  // }
+
+  rpc DeleteAccount(DeleteAccountRequest) returns (common.v1.BoolResponse) {
+    option (google.api.http) = {
+      delete : "/v1/accounts/{id}"
+    };
+  }
+
+  rpc SetAccountRole(SetAccountRoleRequest) returns (common.v1.BoolResponse) {
+    option (google.api.http) = {
+      post : "/v1/accounts/{id}/role"
+      body : "request"
+    };
+  }
+
+  rpc Health(google.protobuf.Empty) returns (common.v1.BoolResponse) {
+    option (google.api.http) = {
+      get : "/v1/accounts/health"
+    };
+  }
+}
+
+message AccountFilter {
+  optional string email = 1;
+
+  optional uint64 limit = 10;
+  optional uint64 offset = 11;
+}
+
+message GetAccountRequest { string id = 1; }
+
+message GetAccountResponse { optional Account account = 1; }
+
+message ListAccountsRequest { AccountFilter filter = 1; }
+
+message ListAccountsResponse { repeated Account accounts = 1; }
+
+message UpdateAccountDetailsRequest { string id = 1; }
+
+message UpdateAccountDetailsResponse { Account account = 1; }
+
+message DeleteAccountRequest { string id = 1; }
+
+message SetAccountRoleRequest {
+  string id = 1;
+  Role request = 2;
+}

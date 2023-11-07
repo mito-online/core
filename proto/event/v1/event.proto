@@ -1,0 +1,11 @@
+syntax = "proto3";
+package event.v1;
+
+import "account/v1/account.proto";
+
+enum Topic {
+  TOPIC_UNSPECIFIED = 0;
+  TOPIC_ACCOUNT_UPDATED = 1;
+}
+
+message AccountUpdatePayload { string id = 1; }

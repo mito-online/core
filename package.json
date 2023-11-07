@@ -1,0 +1,7 @@
+{
+  "name": "mito-online-core",
+  "version": "0.0.1",
+  "repository": "git@github.com:mito-online/core.git",
+  "author": "Amaury Diaz <amauryuh@gmail.com>",
+  "license": "MIT"
+}
