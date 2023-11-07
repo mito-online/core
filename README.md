@@ -1,5 +1,7 @@
 # MITO Core
 
+[Swagger Specs](https://redocly.github.io/redoc/?url=https://raw.githubusercontent.com/mito-online/core/master/domain/public.swagger.json)
+
 [core Package](https://buf.build/mito/core)
 
 To compile:
